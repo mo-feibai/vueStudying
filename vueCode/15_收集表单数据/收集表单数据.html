@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <form @submit.prevent="submit">
+            <label for="userName">账号：</label>
+            <input type="text" name="userName" id="userName" v-model="userInfo.account"> <br><br>
+            <label for="password">密码：</label>
+            <input type="password" name="password" id="password" v-model="userInfo.password"> <br><br>
+            <label for="gender">性别：</label>
+            <input type="radio" name="gender" value="man" v-model="userInfo.gender">男
+            <input type="radio" name="gender" value="woman" v-model="userInfo.gender">女<br><br>
+            <label for="age">年龄：</label>
+            <input type="number" name="age" id="age" v-model.number="userInfo.age"><br><br>
+            <label for="hobbies">爱好：</label>
+            <input type="checkbox" name="hobbies" value="studying" v-model="userInfo.hobbies">学习
+            <input type="checkbox" name="hobbies" value="playing" v-model="userInfo.hobbies">打游戏
+            <input type="checkbox" name="hobbies" value="eatting" v-model="userInfo.hobbies">吃饭 <br><br>
+            <label for="school">所属校区：</label>
+            <select name="school" id="school" v-model="userInfo.school">
+                <option value="">--请选择校区--</option>
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+                <option value="shenzhen">深圳</option>
+                <option value="wuhan">武汉</option>
+            </select> <br><br>
+            <label for="other">其他信息：</label><br>
+            <textarea name="other" id="other" cols="50" rows="10" v-model="userInfo.other"></textarea><br><br>
+            <input type="checkbox" v-model="userInfo.isAccepted">
+            阅读并接受<a href="https://www,atguigu.com">《用户协议》</a> <br><br>
+            <button>提交</button>
+        </form>
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    new Vue({
+        el: "#root",
+        data: {
+            userInfo: {
+                account: "",
+                password: "",
+                gender: "man",
+                hobbies: [],
+                school: "",
+                other: "",
+                isAccepted: true,
+                age:""
+            }
+        },
+        methods: {
+            submit() {
+                console.log(JSON.stringify(this.userInfo));
+            }
+        }
+    })
+</script>
+
+</html>

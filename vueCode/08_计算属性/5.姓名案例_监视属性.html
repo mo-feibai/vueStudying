@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例_监视属性</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        姓：<input type="text" v-model="firstName"><br><br>
+        名：<input type="text" v-model="lastName"><br><br>
+        姓名：<span>{{fullName}}</span>
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    const vm = new Vue({
+        el: "#root",
+        data: {
+            firstName: "张",
+            lastName: "三",
+            fullName: "张-三"
+        },
+        // computed: {
+        //     fullName() {
+        //         return this.firstName + '-' + this.lastName;
+        //     }
+        // },
+        watch: {
+            firstName(newVal, oldVal) {
+               setTimeout(()=>{
+                this.fullName = newVal + '-' + this.lastName;
+               },3000)
+            },
+            lastName(newVal, oldVal) {
+                this.fullName = this.firstName + '-' + newVal;
+            },
+        }
+    })
+</script>
+
+</html>

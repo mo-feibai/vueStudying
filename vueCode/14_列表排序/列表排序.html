@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表过滤</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>人员列表</h2>
+        <input type="text" placeholder="请输入名字" v-model="input">
+        <button @click="orderType=1">年龄升序</button>
+        <button @click="orderType=-1">年龄降序</button>
+        <button @click="orderType=0">原顺序</button>
+        <ul>
+            <li v-for="person in searchList" :key="person.id">
+                {{person.name}} - {{person.age}} - {{person.gender}}
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    new Vue({
+        el: "#root",
+        data: {
+            persons: [
+                {
+                    id: "001",
+                    name: "马冬梅",
+                    age: 18,
+                    gender: "女"
+                },
+                {
+                    id: "002",
+                    name: "周冬雨",
+                    age: 20,
+                    gender: "女"
+                },
+                {
+                    id: "003",
+                    name: "温兆伦",
+                    age: 16,
+                    gender: "男"
+                },
+                {
+                    id: "004",
+                    name: "周杰伦",
+                    age: 25,
+                    gender: "男"
+                }
+            ],
+            input: "",
+            // 0-原顺序 1-升序 -1-降序
+            orderType:0
+        },
+        methods: {
+        },
+        computed: {
+            searchList() {
+                let filterPersons = this.persons.filter(person => {
+                    return person.name.indexOf(this.input) != -1;
+                });
+                return filterPersons.sort((person1,person2) => {
+                    return (person1.age - person2.age) * this.orderType;
+                })
+            }
+        },
+        watch: {
+
+        }
+    })
+</script>
+
+</html>

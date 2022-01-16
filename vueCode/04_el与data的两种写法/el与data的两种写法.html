@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>el与data的两种写法</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">你好，{{name}}</div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    // el的两种写法
+    // const vm = new Vue({
+    //     // el: "#root",
+    //     data: {
+    //         name:"尚硅谷"
+    //     }
+    // })
+    // console.log(vm);
+    // vm.$mount("#root");
+
+    // data的两种写法
+    const vm = new Vue({
+        el: "#root",
+        //data的第一种写法：对象式
+        // data: {
+        //     name:"尚硅谷"
+        // }
+        // data的第二种写法：函数式
+        data(){
+            console.log(this);
+            return {
+                name:"尚硅谷"
+            }
+        }
+    })
+    console.log(vm);
+</script>
+
+</html>

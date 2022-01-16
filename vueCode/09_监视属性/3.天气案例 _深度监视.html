@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天气案例 _深度监视</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>今天天气很{{weatherStatus}}</h2>
+        <button @click="isCold = !isCold">点击切换天气情况</button>
+        <hr>
+        <h3>a的值为{{numbers.a}}</h3>
+        <button @click="numbers.a++">点我a+1</button>
+        <hr>
+        <h3>b的值为{{numbers.b}}</h3>
+        <button @click="numbers.b++">点我b+1</button>
+        <!-- <button @click="numbers = {a:88,b:99}">彻底替换numbers</button> -->
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    new Vue({
+        el: "#root",
+        data: {
+            isCold: false,
+            numbers:{
+                a:1,
+                b:1
+            }
+        },
+        methods: {
+            // changeWeather() {
+            //     this.isCold = !this.isCold;
+            // }
+        },
+        computed:{
+            weatherStatus(){
+                return this.isCold?"凉爽":"炎热";
+            }
+        },
+        watch:{
+            isCold:{
+                handler(newVal,oldVal){
+                    // console.log("调用handler函数");
+                    console.log(newVal,oldVal);
+                }
+            },
+            numbers:{
+                deep:true,
+                handler(newVal,oldVal){
+                    console.log("a的值改变了",newVal,oldVal);
+                }
+            }
+        }
+    })
+</script>
+
+</html>

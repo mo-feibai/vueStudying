@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例_methods方法实现</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        姓：<input type="text" v-model="firstName"  ><br><br>
+        名：<input type="text" v-model="lastName"><br><br>
+        姓名：<span>{{showFullName()}}</span>
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    new Vue({
+        el: "#root",
+        data: {
+            firstName: "张",
+            lastName: "三",
+            fullName: "张-三"
+        },
+        methods: {
+            showFullName() {
+                return this.firstName + "-" + this.lastName;
+            }
+        }
+    })
+</script>
+
+</html>

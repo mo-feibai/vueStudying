@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>回顾defineProperty</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script>
+   let person = {
+       name:"张三",
+       gender:"男",
+   }
+/*    Object.defineProperty(person,'age',{
+       value:18,
+       // 控制属性是否可以被枚举
+       enumerable:true,
+       // 控制属性是否可以被修改
+       writable:true,
+       // 控制属性是否可以被删除
+       configurable:true
+   }) */
+
+//    console.log(person);
+//    console.log(Object.keys(person));
+//    person.age = 20;
+//    console.log(person);
+let number = 18;
+Object.defineProperty(person,"age",{
+    // 当读取person的age属性时，get()函数被调用，且返回值为age的值
+    get(){
+        return number;
+    },
+      // 当修改person的age属性时，get()函数被调用，且收到为age的值
+    set(value){
+        console.log(value);
+        number = value;
+    }
+})
+   
+   console.log(person);
+</script>
+
+</html>

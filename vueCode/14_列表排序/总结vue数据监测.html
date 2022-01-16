@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>学生信息</h1>
+        <button @click="student.age++">年龄加一岁</button>
+        <button @click="addSex">添加性别属性，默认值：男</button>
+        <button @click="addFriendAtFirst">在列表首位添加一个朋友</button>
+        <button @click="changeFirstFriendName">修改第一个朋友的名字为：张三</button>
+        <button @click="addHobby">添加一个爱好</button>
+        <button @click="changeFirstHobby">修改第一个爱好的名字为；开车</button>
+        <h3>姓名：{{student.name}}</h3>
+        <h3>年龄：{{student.age}}</h3>
+        <h3>性别：{{student.sex}}</h3>
+        <h3>爱好：</h3>
+        <ul>
+            <li v-for="(hobby,index) in student.hobbies" :key="index">{{hobby}}</li>
+        </ul>
+        <h3>朋友们：</h3>
+        <ul>
+            <li v-for="(friend,index) in student.friends" :key="index">{{friend.name}} -- {{friend.age}}</li>
+        </ul>
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    const vm = new Vue({
+        el: "#root",
+        data: {
+            student: {
+                name: "Tom",
+                age: 18,
+                hobbies: ["抽烟", "喝酒", "烫头"],
+                friends: [
+                    { name: "Jerry", age: 35 },
+                    { name: "Jack", age: 27 }
+                ]
+            }
+        },
+        methods: {
+            addSex(){
+                this.$set(this.student,"sex","男")
+            },
+            addFriendAtFirst(){
+                this.student.friends.unshift({name:"Jucy",age:23})
+            },
+            changeFirstFriendName(){
+                this.student.friends[0].name="张三"
+            },
+            addHobby(){
+                this.student.hobbies.push("读书");
+            },
+            changeFirstHobby(){
+                this.$set(this.student.hobbies,0,"开车");
+            }
+        }
+    });
+</script>
+
+</html>
