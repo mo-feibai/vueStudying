@@ -17,7 +17,7 @@
 </body>
 <script>
     Vue.config.productiontip = false;
-    new Vue({
+    const vm = new Vue({
         el: "#root",
         data: {
             n:0
@@ -26,7 +26,16 @@
             add(){
                 this.n++;
             }
-        }
+        },
+        beforeCreate() {
+            console.log('BeforeCreate');
+        },
+        created() {
+            console.log("Created");
+        },
+        beforeMount() {
+            console.log("BeforeMoubt");
+        },
     })
 </script>
 

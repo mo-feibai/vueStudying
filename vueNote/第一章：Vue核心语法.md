@@ -391,4 +391,12 @@ Object.defineProperty(person,"age",{
 
 ## 1.17 vue的生命周期
 
-![vue的生命周期钩子](https://gitee.com/mofeibai/md-pics/raw/master/vueCode/vue%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90.png)
+![vue的生命周期钩子](https://gitee.com/mofeibai/md-pics/raw/master/vueCode/vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png)
+
++ 常用的生命周期钩子
+  1. mounted: 发送ajax请求，启动定时器，绑定自定义事件，订阅消息等<font color=red>（初始化操作）</font>
+  2. beforeDestroy：清除定时器，解绑自定义事件,取消订阅消息等<font color=red>（收尾工作）</font>
++ 关于销毁vue实例
+  + 销毁后借助的vue开发者工具看不到任何信息
+  + 销毁后自定义事件会失效，但原生DOM事件仍然有效
+  + 一般不会在beforeDestroy中操作数据，因为即使操作数据，也不会触发更新流程

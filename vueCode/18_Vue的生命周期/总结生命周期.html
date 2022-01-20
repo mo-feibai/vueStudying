@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue的生命周期</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2 :style="{opacity}">欢迎学习Vue</h2>
+        <button @click="stopChange">点我停止变换透明度</button>
+        <button @click="opacity = 1">透明度设置为1</button>
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+    new Vue({
+        el: "#root",
+        data: {
+            opacity: 1
+        },
+        methods: {
+            stopChange(){
+                // clearInterval(this.taskId);
+                this.$destroy();
+            }
+        },
+        mounted() {
+            const taskId =  setInterval(() => {
+                console.log("定时器运行");
+                this.opacity -= 0.01;
+                if (this.opacity <= 0) {
+                    this.opacity = 1;
+                }
+            }, 16);
+            this.taskId = taskId;
+        },
+        beforeDestroy() {
+            clearInterval(this.taskId);
+        },
+    })
+</script>
+
+</html>
