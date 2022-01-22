@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件的嵌套</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+
+    // 创建student组件
+    const student = Vue.extend({
+        template:
+            `
+        <div>
+            <h2>学生姓名:{{studentName}}</h2>
+            <h2>学生年龄:{{studentAge}}</h2>
+        </div>
+        `,
+        data() {
+            return {
+                studentName: "张三",
+                studentAge: 18
+            }
+        },
+        methods: {
+        }
+    })
+    // 创建school组件
+    const school = Vue.extend({
+        template:
+            `
+        <div>
+            <h2>学校名称:{{schoolName}}</h2>
+            <h2>学校地址:{{schoolAddress}}</h2>
+            <hr>
+            <student></student>
+        </div>
+        `,
+        data() {
+            return {
+                schoolName: "尚硅谷",
+                schoolAddress: "北京"
+            }
+        },
+        components: {
+            student
+        }
+    })
+
+    //创建hello组件
+    const hello = Vue.extend({
+        template: `<h2>Hello,欢迎学习Vue</h2>`
+    })
+
+    //创建app组件
+    const app = Vue.extend({
+        template: `
+        <div>
+            <hello></hello>
+            <hr>
+            <school></school>
+        </div>
+        `,
+        components: {
+            hello,
+            school
+        }
+    })
+    new Vue({
+        el: "#root",
+        template: `<app></app>`,
+        components: {
+            app
+        }
+    })
+</script>
+
+</html>

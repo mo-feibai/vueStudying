@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueComponent</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>{{msg}}</h2>
+        <hr>
+        <School></School>
+    </div>
+</body>
+<script>
+    Vue.config.productiontip = false;
+
+    // 创建school组件
+    const School = Vue.extend({
+        template:
+            `
+        <div>
+            <h2>学校名称:{{schoolName}}</h2>
+            <h2>学校地址:{{schoolAddress}}</h2>
+        </div>
+        `,
+        data() {
+            return {
+                schoolName: "尚硅谷",
+                schoolAddress: "北京"
+            }
+        }
+    })
+
+    console.log(School);
+
+    //创建vm
+    new Vue({
+        el: "#root",
+        components: {
+            School
+        },
+        data:{
+            msg:"欢迎学习Vue"
+        }
+    }) 
+</script>
+
+</html>
