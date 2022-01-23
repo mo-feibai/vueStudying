@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import School from "./components/School.vue"
 import Student from "./components/Student.vue";
+import School from "./components/School.vue"
 export default {
   name: "App",
   components: {
@@ -17,9 +17,3 @@ export default {
   },
 };
 </script>
-
-<style>
- .container {
-   color: rgb(229, 255, 0)
- }
-</style>

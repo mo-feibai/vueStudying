@@ -128,3 +128,37 @@
 + 当需要传递的数据为数字时，可以使用``<Demo :age="18">``防止传入的为字符串
 
 + props默认为只读的，Vue底层会监测对props的数据的修改，如果确实需要修改，可以将props传入的数据copy到data中，对data的相应数据修改
+
+## 8. 配置项mixin（混合/混入）
+
++ 把多个组件公用的配置提取为一个混入对象共同使用
+
++ 使用方式：
+
+    ```vue
+    // 定义混合
+    {
+      data(){xxx},
+      mounted:{xxx},
+      methods:{xxx}
+    }
+    ```
+
+  + 使用混合
+    + 全局混入：Vue.mixin(xxx)
+    + 局部混入：new Vue({mixin:[xxx]})
+
+## 9. Vue插件
+
++ 用于增强vue
+
++ 包含install方法的一个对象，install的第一个参数为Vue,第二个以后传递的参数为插件使用者传递的数据
+
++ 定义插件
+  + 对象.install = function(Vue,options){}
++ 使用插件：Vue.use(插件)
+
+## 10. scoped
+
++ 作用：样式旨在当前组件生效
++ ``<style scoped>``
