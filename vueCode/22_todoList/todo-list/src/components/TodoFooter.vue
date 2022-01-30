@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "TodoFooter",
-  props: ["todos", "allCheckOrNot", "deleteAll"],
+  props: ["todos"],
   computed: {
     doneCount() {
       return this.todos.filter((todoObj) => todoObj.done === true).length;
@@ -24,11 +24,11 @@ export default {
   },
   methods: {
     checkAll(event) {
-      this.allCheckOrNot(event.target.checked);
+      this.$emit('allCheckOrNot',event.target.checked);
     },
     clearAll() {
       if (confirm("确认删除所有已完成？")) {
-        this.deleteAll();
+        this.$emit('deleteAll');
       }
     },
   },

@@ -164,3 +164,44 @@
 
 + 作用：样式旨在当前组件生效
 + ``<style scoped>``
+
+## 11. 浏览器的本地存储
+
++ 存储内容大小一般支持5Mb左右（不同浏览器可能不同）
++ 浏览器通过Window.sessionStorage 和 Window.localStorage属性实现本地存储机制
++ 相关API
+  + xxxStorage.setItem(key, value) --- 添加，如果key存在，则更新
+  + xxxStorage.getItem(key) --读取，如果key不存在，返回null
+  + xxxStorage.removeItem(key) --删除
+  + xxxStorage.clear()  --清空
++JSON.parse(null)的结果仍然为null
+
+## 组件的自定义事件
+
++ 一种组件间的通信方式，使用于 ： 子组件==> 父组件
++ 使用场景：A为父组件，B为子组件，B想给A传数据，就在A中给B绑定自定义事件（事件的回调在A中）
+
++ 绑定自定义事件：
+  + 第一种方式：在父组件中``<Demo @atguigu="test"></Demo>``或``<Demo v-on:atguigu="test"></Demo>``
+
+  + 第二种方式：在父组件中
+
+    ```vue
+    <Demo ref="test">
+    ...
+    mounted(){
+      this.$refs.test.$on(事件名称,回调方法)
+    }
+    ```
+
+  + 要获取的数据如果为多个时，可以通过对象传递或者使用``...参数名``的形式传递
+
+  + 若想让自定义事件只能触发一次，可以加上once修饰符，或$once方法
+
++ 触发自定义事件：``this.$emit(事件名称,数据)``
+
++ 解绑自定义事件：``this.$off(事件名称)``
+
++ 组件上也可以绑定原生DOM事件，需要使用native修饰符
+
++ 通过``this.$refs.on(事件名称，回调方法)``绑定自定义事件的时候，回调要么配置到methods方法中，用么使用箭头函数，否则this的指向会出现问题

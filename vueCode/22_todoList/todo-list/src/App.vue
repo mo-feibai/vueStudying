@@ -2,7 +2,7 @@
   <div id="app">
     <div class="todo-container">
       <div class="todo-wrap">
-        <TodoHeader :getTodo="getTodo"></TodoHeader>
+        <TodoHeader @addTodo="getTodo"></TodoHeader>
         <Todos
           :todos="todoArr"
           :getChangeId="getChangeId"
@@ -10,8 +10,8 @@
         ></Todos>
         <TodoFooter
           :todos="todoArr"
-          :allCheckOrNot="allCheckOrNot"
-          :deleteAll="deleteAll"
+          @allCheckOrNot="allCheckOrNot"
+          @deleteAll="deleteAll"
         ></TodoFooter>
       </div>
     </div>
@@ -32,23 +32,7 @@ export default {
   },
   data() {
     return {
-      todoArr: [
-        {
-          id: "001",
-          title: "吃饭",
-          done: true,
-        },
-        {
-          id: "002",
-          title: "睡觉",
-          done: true,
-        },
-        {
-          id: "003",
-          title: "打豆豆",
-          done: false,
-        },
-      ],
+      todoArr: [],
       doneCount: 0,
     };
   },
@@ -81,6 +65,20 @@ export default {
     deleteAll() {
       this.todoArr = this.todoArr.filter((todoObj) => !todoObj.done);
     },
+  },
+  watch: {
+    todoArr: {
+      deep: true,
+      handler(value) {
+        localStorage.setItem("todoArr", JSON.stringify(value));
+      },
+    },
+  },
+  mounted() {
+    let todoArr = JSON.parse(localStorage.getItem("todoArr"));
+    if (todoArr) {
+      this.todoArr = todoArr;
+    }
   },
 };
 </script>

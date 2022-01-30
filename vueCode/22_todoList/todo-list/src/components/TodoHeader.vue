@@ -21,14 +21,13 @@ export default {
           done: false,
         };
 
-        this.getTodo(todoObj);
+        this.$emit('addTodo',todoObj);
       } else {
         alert("输入不能为空");
       }
       event.target.value = "";  
     },
   },
-  props: ["getTodo"],
 };
 </script>
 
