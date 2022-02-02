@@ -4,8 +4,6 @@
       v-for="item in todos"
       :key="item.id"
       :todo="item"
-      :getChangeId="getChangeId"
-      :handleTodo="handleTodo"
     ></Todo>
   </ul>
 </template>
@@ -17,7 +15,7 @@ export default {
   components: {
     Todo,
   },
-  props: ["todos", "getChangeId", "handleTodo"],
+  props: ["todos"],
 };
 </script>
 

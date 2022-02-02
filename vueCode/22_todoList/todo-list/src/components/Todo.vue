@@ -6,22 +6,63 @@
         :checked="todo.done"
         @change="changeStatus(todo.id)"
       />&nbsp;
-      <span>{{ todo.title }}</span>
+      <span v-show="!todo.isEditing">{{ todo.title }}</span>
+      <input
+        type="text"
+        :value="todo.title"
+        v-show="todo.isEditing"
+        @blur="edited($event, todo)"
+        ref="inputTitle"
+      />
     </label>
     <button class="btn btn-danger" @click="deleteTodo(todo.id)">删除</button>
+    <button
+      class="btn btn-success"
+      @click="editTodo(todo)"
+      v-show="isEditable(todo)"
+    >
+      编辑
+    </button>
   </li>
 </template>
 
 <script>
 export default {
   name: "Todo",
-  props: ["todo", "getChangeId", "handleTodo"],
+  props: ["todo"],
+  computed: {
+    // 是否可以编辑
+    isEditable() {
+      return (todo) => {
+        return !todo.done && !todo.isEditing;
+      };
+    },
+  },
   methods: {
     changeStatus(id) {
-      this.getChangeId(id);
+      this.$bus.$emit("getChangeId", id);
     },
     deleteTodo(id) {
-      this.handleTodo(id);
+      this.$bus.$emit("handleTodo", id);
+    },
+    editTodo(todoObj) {
+      if (todoObj.hasOwnProperty("isEditing")) {
+        todoObj.isEditing = true;
+      } else {
+        this.$set(todoObj, "isEditing", true);
+      }
+      this.$nextTick(() => {
+        this.$refs.inputTitle.focus();
+      });
+    },
+    edited(event, todoObj) {
+      todoObj.isEditing = false;
+      let value = event.target.value.trim();
+      if (!value) {
+        alert("输入不能为空");
+        return;
+      }
+      this.$bus.$emit("updateTodo", todoObj.id, value);
     },
   },
 };
@@ -52,6 +93,7 @@ li button {
   float: right;
   display: none;
   margin-top: 3px;
+  margin-left: 5px;
 }
 
 li:before {

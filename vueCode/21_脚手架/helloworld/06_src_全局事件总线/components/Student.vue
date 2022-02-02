@@ -2,7 +2,7 @@
   <div class="student">
     <h2>学生姓名：{{ name }}</h2>
     <h2>性别：{{ gender }}</h2>
-    <button @click="sendStudentName">把学生名给app</button>
+    <button @click="sendStudentName">把学生名给School组件</button>
   </div>
 </template>
 
@@ -15,9 +15,9 @@ export default {
       gender: "男"
     };
   },
-  methods: {
+  methods:{
     sendStudentName(){
-      this.$emit("atguigu",this.name);
+      this.$bus.$emit("hello",666)
     }
   }
 };

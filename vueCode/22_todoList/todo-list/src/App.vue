@@ -3,11 +3,7 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <TodoHeader @addTodo="getTodo"></TodoHeader>
-        <Todos
-          :todos="todoArr"
-          :getChangeId="getChangeId"
-          :handleTodo="handleTodo"
-        ></Todos>
+        <Todos :todos="todoArr"></Todos>
         <TodoFooter
           :todos="todoArr"
           @allCheckOrNot="allCheckOrNot"
@@ -50,11 +46,13 @@ export default {
         }
       });
     },
+    // 根据id删除todo
     handleTodo(id) {
       if (confirm("确认删除吗？")) {
         for (const index in this.todoArr) {
           if (this.todoArr[index].id === id) {
             this.todoArr.splice(index, 1);
+            break;
           }
         }
       }
@@ -64,6 +62,14 @@ export default {
     },
     deleteAll() {
       this.todoArr = this.todoArr.filter((todoObj) => !todoObj.done);
+    },
+    updateTodo(id, value) {
+      this.todoArr.forEach((todoObj) => {
+        if (todoObj.id === id) {
+          todoObj.title = value;
+          return;
+        }
+      });
     },
   },
   watch: {
@@ -79,6 +85,16 @@ export default {
     if (todoArr) {
       this.todoArr = todoArr;
     }
+    // 绑定全局事件总线
+    this.$bus.$on("getChangeId", this.getChangeId);
+    this.$bus.$on("handleTodo", this.handleTodo);
+    this.$bus.$on("updateTodo", this.updateTodo);
+  },
+  // 解绑全局事件总线
+  beforeDestroy() {
+    this.$bus.$off("changeStatus");
+    this.$bus.$off("deleteTodo");
+    this.$bus.$off("updateTodo");
   },
 };
 </script>
@@ -111,6 +127,17 @@ body {
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #1cb862;
+  border: 1px solid #147c2b;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #147c2b;
 }
 
 .btn:focus {

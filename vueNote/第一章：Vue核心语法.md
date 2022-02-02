@@ -178,6 +178,22 @@ Object.defineProperty(person,"age",{
   }
   ```
 
++ 计算属性传参
+
+```vue
+    html代码：
+    <p>{{ getNewIndex(data) }}</p>
+    js:
+    computed: {
+      getNewIndex() {
+        // data是使用的时候的参数
+        retun (data) => {
+            return data.index;
+        }
+      },
+    }
+  ```
+
 ## 1.8 监视属性
 
 + 当被监视的属性变化时，回调函数自动调用，进行相关操作
