@@ -176,7 +176,7 @@
   + xxxStorage.clear()  --清空
 +JSON.parse(null)的结果仍然为null
 
-## 组件的自定义事件
+## 12. 组件的自定义事件
 
 + 一种组件间的通信方式，使用于 ： 子组件==> 父组件
 + 使用场景：A为父组件，B为子组件，B想给A传数据，就在A中给B绑定自定义事件（事件的回调在A中）
@@ -205,3 +205,80 @@
 + 组件上也可以绑定原生DOM事件，需要使用native修饰符
 
 + 通过``this.$refs.on(事件名称，回调方法)``绑定自定义事件的时候，回调要么配置到methods方法中，用么使用箭头函数，否则this的指向会出现问题
+
+## 13. 全局事件总线
+
++ 一种组件间通信方式，<font color=red>适用于任意组件间通信</font>
+
++ 安装全局事件总线：
+
+```vue
+new Vue({
+  ......
+  beforeCreate(){
+    Vue.prototype.$bus = this;
+  }
+})
+```
+
++ 使用数据事件总线
+  + 接收数据：A组件想接收数据，则在A组件中给$bus绑定自定义事件，事件的回调留在A组件自身
+
+  ```vue
+  methods:{
+    xxx(data){......}
+  }
+  ......
+  // 绑定事件
+  mounted() {
+    this.$bus.$on(事件名称,methods中定义的回调函数xxx)
+  },
+  // 解绑事件
+  beforeDestroy(){
+    this.$bus.$off(事件名称)
+  }
+  ```
+
+  + 提供数据
+
+    ```vue
+    this.$bus.$emit(事件名称,数据);
+    ```
+
+## 14. 消息订阅与发布
+
++ 使用[pubsub-js](https://github.com/mroderick/PubSubJS/)插件
+
+## 15. nextTick
+
++ 语法：``this.$nextTick(callback)``
+
++ 作用：在下一次DOM更新结束后执行指定的回调
+
++ 用处： 当改变数据后，要基于更新后的DOM执行操作时，要在nextTick的所指定的回调函数中执行
+
+## 16. 动画与过度
+
++ 作用：在插入，更新或移除DOM元素时，在合适的时候给元素添加样式类名
+
++ 写法：
+  + 准备好样式
+    + 元素进入的样式
+      + v-enter:进入的起点
+      + v-enter-active:进入过程中
+      + v-enter-to:进入的终点
+    + 元素离开的样式
+      + v-leave:离开的起点
+      + v-leave-active:离开过程中
+      + v-leave-to:离开的终点
+  + 使用``<transition></transition>``包裹过度的元素，并配置name属性
+
+    ```vue
+    <transition>
+      <h1 v-show="!isShow">你好啊</h1>
+    </transition>
+    ```
+
+  >如果有多个元素需要过渡动画，需要使用``<transitionGroup></transitionGroup>``标签，并为每个元素指定key值<br/>
+  > <b><font style="background-color:green" color="black">如果&lt;transition&gt;或&lt;transitionGroup&gt;指定了name属性，则上述的样式类名的开头v改成对应的name值</font></b>
+  
