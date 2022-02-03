@@ -1,29 +1,31 @@
 <template>
-  <li>
-    <label>
-      <input
-        type="checkbox"
-        :checked="todo.done"
-        @change="changeStatus(todo.id)"
-      />&nbsp;
-      <span v-show="!todo.isEditing">{{ todo.title }}</span>
-      <input
-        type="text"
-        :value="todo.title"
-        v-show="todo.isEditing"
-        @blur="edited($event, todo)"
-        ref="inputTitle"
-      />
-    </label>
-    <button class="btn btn-danger" @click="deleteTodo(todo.id)">删除</button>
-    <button
-      class="btn btn-success"
-      @click="editTodo(todo)"
-      v-show="isEditable(todo)"
-    >
-      编辑
-    </button>
-  </li>
+  <transition name="todo" appear>
+    <li>
+      <label>
+        <input
+          type="checkbox"
+          :checked="todo.done"
+          @change="changeStatus(todo.id)"
+        />&nbsp;
+        <span v-show="!todo.isEditing">{{ todo.title }}</span>
+        <input
+          type="text"
+          :value="todo.title"
+          v-show="todo.isEditing"
+          @blur="edited($event, todo)"
+          ref="inputTitle"
+        />
+      </label>
+      <button class="btn btn-danger" @click="deleteTodo(todo.id)">删除</button>
+      <button
+        class="btn btn-success"
+        @click="editTodo(todo)"
+        v-show="isEditable(todo)"
+      >
+        编辑
+      </button>
+    </li>
+  </transition>
 </template>
 
 <script>
@@ -109,5 +111,22 @@ li:hover {
 }
 li:hover button {
   display: block;
+}
+
+.todo-enter-active {
+  animation: todoAnimation 0.5s ease-in-out;
+}
+
+.todo-leave-active {
+  animation: todoAnimation 0.5s ease-in-out reverse;
+}
+
+@keyframes todoAnimation {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0px);
+  }
 }
 </style>

@@ -282,3 +282,35 @@ new Vue({
   >如果有多个元素需要过渡动画，需要使用``<transitionGroup></transitionGroup>``标签，并为每个元素指定key值<br/>
   > <b><font style="background-color:green" color="black">如果&lt;transition&gt;或&lt;transitionGroup&gt;指定了name属性，则上述的样式类名的开头v改成对应的name值</font></b>
   
+## 17. 配置代理服务器
+
+1. 在vue.config.js中添加配置
+
+```vue
+devServer:{
+  proxy:"代理地址"
+}
+
+  > 优点：配置简单，请求资源时直接发给前端
+  > 缺点：不能配置多个代理，不能灵活控制请求是否走代理
+  > 工作方式：按上述方式配置代理，当请求的资源前端不存在时，才会转发到服务器
+
+2. 编写vue.config.js配置具体代理规则
+```vue
+    devServer: {
+        proxy: {
+          // 匹配所有以api开头的路径
+            '/api': {
+                target: 'http://192.168.245.88:5000',
+                // 支持websocket
+                ws: true, 
+                // 控制请求头中的host值
+                changeOrigin: true,
+                // 路径重写（正则表达式）
+                pathRewrite: {
+                    "^/api": ""
+                }
+            },
+        }
+    }
+```
