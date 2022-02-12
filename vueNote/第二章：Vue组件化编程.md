@@ -314,3 +314,64 @@ devServer:{
         }
     }
 ```
+
+## 18. 插槽
+
++ 让父组件可以向子组件的指定位置插入html结构，也是一种组件间的通信方式，适用于<font color=red>父组件 ===> 子组件</font>
+
++ 默认插槽
+
+  ```vue
+  // 父组件
+      <Category title="游戏">
+      <ul>
+        <li v-for="(item, index) in games" :key="index">{{ item }}</li>
+      </ul>
+    </Category>
+  // 子组件
+    <div class="category">
+    <h3>{{title}}分类</h3>
+    <slot>我是默认值</slot>
+  </div>
+  ```
+
++ 具名插槽（区分一个组件内的多个插槽）
+
+  ```vue
+  // 父组件
+    <Category title="美食">
+      <img src="pic.jpg" alt="美食图片" slot="center" />
+      <div class="footer" slot="footer">
+        <a href="http://www.baidu.com" target="_blank">更多美食</a>
+      </div>
+    </Category>
+  // 子组件
+    <div class="category">
+    <h3>{{title}}分类</h3>
+    <slot name="center">我是默认值</slot>
+    <slot name="footer">我是默认值</slot>
+  </div>
+  ```
+
+  + 父组件中的``slot="center"``也可以写为``v-slot=center``，但此时子组件中的内容需要使用template包裹
+
++ 作用域插槽
+  + <b><font style="background-color:green" color="black">数据在组件自身，但根据数据生成的结构需要组件的使用者决定</font></b>
+  
+  ```vue
+  // 父组件（template必须使用）
+    <Category title="游戏">
+      <template scope="games">
+        <h4 style="color:red" v-for="(item, index) in games.games" :key="index">{{ item }}</h4>
+      </template>
+    </Category>
+  // 子组件
+  <div class="category">
+    <h3>{{ title }}分类</h3>
+      <slot :games="games">我是默认内容</slot>
+  </div>
+  ```
+
+  + 父组件中的``scope="games"``也可以使用``slot-scope="games"``
+
+  + scope可以接收多个参数，所以scope接收的为一个对象，对象中为子组件发送的一系列参数

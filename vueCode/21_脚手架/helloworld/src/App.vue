@@ -1,27 +1,48 @@
 <template>
   <div class="app">
-    <button @click="getStudent">获取学生信息</button>
+    <Category title="游戏">
+      <template scope="games">
+        <ul>
+          <li v-for="(item, index) in games.games" :key="index">{{ item }}</li>
+        </ul>
+      </template>
+    </Category>
+    <Category title="游戏">
+      <template scope="games">
+        <ol>
+          <li v-for="(item, index) in games.games" :key="index">{{ item }}</li>
+        </ol>
+      </template>
+    </Category>
+    <Category title="游戏">
+      <template scope="games">
+        <h4 style="color:red" v-for="(item, index) in games.games" :key="index">{{ item }}</h4>
+      </template>
+    </Category>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import Category from "./components/Category.vue";
 export default {
   name: "App",
-  methods: {
-    getStudent() {
-      axios
-        .get("http://192.168.245.88:8080/api/students")
-        .then((response) => {
-          console.log("请求成功了");
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.log("请求失败了");
-          console.log(error.message);
-        });
-    },
+  components: {
+    Category,
   },
 };
 </script>
+
+<style scoped>
+.app,
+.footer {
+  display: flex;
+  justify-content: space-around;
+}
+img,
+video {
+  margin: 0 15%;
+  width: 70%;
+  height: 70%;
+}
+</style>
 
