@@ -1,8 +1,10 @@
 <template>
   <div>
-    <h2>当前求和为：{{ $store.state.sum }}</h2>
+    <h1>求和信息</h1>
+    <h2>当前求和为：{{ sum }}</h2>
     <h3>当前求和的十倍为：{{ bigSum }}</h3>
     <h4>当前学校{{ school }}，当前地址{{ address }},我的姓名{{ name }}</h4>
+    <h4 style="color: red">下方组件的总人数是:{{ persons.length }}</h4>
     <select v-model.number="selectedNum">
       <option value="1">1</option>
       <option value="2">2</option>
@@ -25,50 +27,16 @@ export default {
     };
   },
   methods: {
-    ...mapMutations({
+    ...mapMutations("countSumOptions", {
       add: "ADD",
       minus: "MINUS",
     }),
-    // add() {
-    //   this.$store.commit("ADD", this.selectedNum);
-    // },
-    // minus() {
-    //   this.$store.commit("MINUS", this.selectedNum);
-    // },
-    // addWhenOdd() {
-    //   this.$store.dispatch("addWhenOdd", this.selectedNum);
-    // },
-    // addLater() {
-    //   this.$store.dispatch("addLater", this.selectedNum);
-    // },
-    // ...mapActions({
-    //   addWhenOdd:'addWhenOdd',
-    //   addLater:'addLater',
-    // }),
-    ...mapActions(['addWhenOdd','addLater'])
+    ...mapActions("countSumOptions", ["addWhenOdd", "addLater"]),
   },
   computed: {
-    //   school(){
-    //       return this.$store.state.school;
-    //   },
-    //   address(){
-    //       return this.$store.state.address;
-    //   },
-    //   name(){
-    //       return this.$store.state.name;
-    //   },
-    // 对象写法
-    // ...mapState({
-    //     school:"school",
-    //     address:"address",
-    //     name:"name"
-    // }),
-    // 数组写法
-    ...mapState(["school", "address", "name"]),
-    //   bigSum(){
-    //       return this.$store.getters.bigSum;
-    //   }
-    ...mapGetters(["bigSum"]),
+    ...mapState("countSumOptions", ["school", "address", "name", "sum"]),
+    ...mapState("personOptions", ["persons"]),
+    ...mapGetters("countSumOptions", ["bigSum"]),
   },
 };
 </script>

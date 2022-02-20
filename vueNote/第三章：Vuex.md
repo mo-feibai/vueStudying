@@ -72,23 +72,23 @@
 
 + 在store.js中追加getters配置项
 
-```vue
-        const getters = {
-        bigSum(state) {
-            return state.sum * 10;
+    ```vue
+            const getters = {
+            bigSum(state) {
+                return state.sum * 10;
+            }
         }
-    }
 
 
 
-    // 创建并暴露store
-    export default new Vuex.Store({
-        actions,
-        mutations,
-        state,
-        getters
-    })
-···
+        // 创建并暴露store
+        export default new Vuex.Store({
+            actions,
+            mutations,
+            state,
+            getters
+        })
+    ```
 
 + 在组件中使用数据``$store.getters.xxx``
 
@@ -98,7 +98,7 @@
 
 1. mapState -- 映射state中的属性为计算属性
 
-    ```vue 
+    ```vue
         // 对象写法
         // ...mapState({
         //     school:"school",
@@ -115,7 +115,7 @@
         ...mapGetters(["bigSum"]),
     ```
 
-3.mapActions -- 生成与actions对话的方法（dispatch方法）
+3. mapActions -- 生成与actions对话的方法（dispatch方法）
 
     ```vue
         // addWhenOdd() {
@@ -129,7 +129,6 @@
         //   addLater:'addLater',
         // }),
         ...mapActions(['addWhenOdd','addLater'])
-
         // 需要通过方法传参
         <button @click="addWhenOdd(selectedNum)">当前求和为奇数再加</button>
         <button @click="addLater(selectedNum)">等一会再加</button>
@@ -152,4 +151,64 @@
 
         <button @click="add(selectedNum)">+</button>
         <button @click="minus(selectedNum)">-</button>
+    ```
+
+## 5. 模块化+命名空间
+
++ 修改store.js
+  
+    ```vue
+        // 按照红能区分不同的actions,mutations,state,getters
+        // 开启命名空间
+            namespaced: true,
+            actions: {},
+            mutations: {},
+            state: {},
+            getters: {}
+    ```
+
+    ```Vue
+        // 创建并暴露store
+        export default new Vuex.Store({
+            modules: {
+                countSumOptions,
+                personOptions
+            }
+        })
+    ```
+
++ 开启命名空间后，读取state的数据
+
+    ```Vue
+        // 自己直接读取
+        $store.state.personOptions.persons;
+        // 借助mapState读取
+        ...mapState("personOptions",["persons"])
+    ```
+
++ 开启命名空间后，读取getters的数据
+
+    ```Vue
+        // 自己直接读取
+        $store.getter["personOptions/getFirstPerson"];
+        // mapGetter
+        ...mapGetters("personOptions",["getFirstPerson"])
+    ```
+
++ 开启命名空间后，调用commit
+
+    ```Vue
+        // 自己调用
+        $store.commit('personOptions/ADD',person);
+        // mapMutations
+        ...mapMutations("personOptions",{add:"ADD"})
+    ```
+
++ 开启命名空间后，调用dispatch
+
+    ```Vue
+        // 自己调用
+        $store.dispatch('personOptions/add',person);
+        // mapActions
+        ...mapActions("personOptions",["add"])
     ```
