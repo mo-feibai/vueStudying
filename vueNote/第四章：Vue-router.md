@@ -58,3 +58,94 @@
     ```
 
 + 使用``<router-link class="list-group-item" active-class="active"  to="/home/homeMessage">Message</router-link>`` to属性需要写全路径
+
+## 5. 路由的query参数
+
++ 传递参数
+
+    ```vue
+          <!-- 跳转路由并携带参数，to的字符串写法 -->
+      <!-- <li v-for="message in messages" :key="message.id">
+      <router-link :to="`/home/homeMessage/messageDetail?id=${message.id}&title=${message.title}`"
+      >{{message.title}}</router-link></li> -->
+
+      <!-- 跳转路由并携带参数，to的对象写法 -->
+      <li v-for="message in messages" :key="message.id">
+        <router-link
+          :to="{
+            path: '/home/homeMessage/messageDetail',
+            query: {
+              id: message.id,
+              title: message.title,
+            },
+          }"
+          >{{ message.title }}</router-link
+        >
+      </li>
+    ```
+
++ 接收参数
+
+    ```vue
+        this.$route.query;  
+    ```
+
+## 6. 命名路由
+
++ 作用：简化路由的跳转
+
++ 使用
+  + 给路由命名
+
+    ```vue
+        {name:"msgDetail", path: "messageDetail", component: MessageDetail }
+    ```
+
+  + 简化跳转
+
+    ```vue
+    <router-link
+          :to="{
+            name:'msgDetail',
+            query: {
+              id: message.id,
+              title: message.title,
+            },
+          }"
+          >{{ message.title }}</router-link
+        >
+    ```
+
+## 7. 路由的params参数
+
+1. 配置路由，生命接收params参数
+
+    ```vue
+        {name:"msgDetail", path: "messageDetail/:id/:title", component: MessageDetail }
+    ```
+
+2. 传递参数
+
+     ```vue
+        <li v-for="message in messages" :key="message.id"><router-link :to="`/home/homeMessage/messageDetail/${message.id}/${message.title}`"
+      >{{message.title}}</router-link></li>
+
+      // 或者
+
+            <li v-for="message in messages" :key="message.id">
+        <router-link
+          :to="{
+            name:'msgDetail',
+            params: {
+              id: message.id,
+              title: message.title,
+            },
+          }"
+          >{{ message.title }}</router-link>
+    ```
+
+    > <b><font style="background-color:red" color="black">路由携带params参数时，如果使用to的对象写法，不能使用path配置项，只能使用name</font></b>
+
+3. 使用
+
+    ``this.$route.params``
