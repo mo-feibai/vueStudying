@@ -4,13 +4,25 @@
     <div>
       <ul class="nav nav-tabs">
         <li>
-          <router-link class="list-group-item" active-class="active"  to="/home/homeNews">News</router-link>
+          <router-link
+            class="list-group-item"
+            active-class="active"
+            to="/home/homeNews"
+            >News</router-link
+          >
         </li>
         <li>
-          <router-link class="list-group-item" active-class="active"  to="/home/homeMessage">Message</router-link>
+          <router-link
+            class="list-group-item"
+            active-class="active"
+            to="/home/homeMessage"
+            >Message</router-link
+          >
         </li>
       </ul>
+      <keep-alive include="HomeNews">
         <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>

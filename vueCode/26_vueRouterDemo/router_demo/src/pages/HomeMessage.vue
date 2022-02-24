@@ -19,10 +19,17 @@
         >
       </li> -->
 
-            <!-- 跳转路由并携带参数，使用params -->
-      <li v-for="message in messages" :key="message.id"><router-link :to="`/home/homeMessage/messageDetail/${message.id}/${message.title}`"
-      >{{message.title}}</router-link></li>
+      <!-- 跳转路由并携带参数，使用params -->
+      <li v-for="message in messages" :key="message.id">
+        <router-link
+          :to="`/home/homeMessage/messageDetail/${message.id}/${message.title}`"
+          >{{ message.title }}</router-link
+        >
+        <button @click="pushWatching(message)">push查看</button>
+        <button @click="replaceWatching(message)">replace查看</button>
+      </li>
     </ul>
+        <input type="text">
     <hr />
     <router-view></router-view>
   </div>
@@ -48,6 +55,26 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    pushWatching(message) {
+      this.$router.push({
+        name: "msgDetail",
+        params: {
+          id: message.id,
+          title: message.title,
+        },
+      });
+    },
+    replaceWatching(message) {
+       this.$router.replace({
+        name: "msgDetail",
+        params: {
+          id: message.id,
+          title: message.title,
+        },
+      });
+    },
   },
 };
 </script>

@@ -149,3 +149,91 @@
 3. 使用
 
     ``this.$route.params``
+
+## 8. 路由的props配置
+
++ 让路由更方便收到参数
+
+  ```vue
+      name: "msgDetail", path: "messageDetail/:id/:title", component: MessageDetail,
+    // props的第一种写法：对象,该对象中的所有key-value会以props的方式传递给所定义的组件
+    // props:{
+    //     a:1,
+    //     b:"hello"
+    // }
+    // props的第二种写法：布尔值，把路由收到的所有params以props的形式传递给所定义的组件
+    // props:true
+    // props的第二种写法：函数，接收$route参数，获取params参数或者query参数
+    props({params}) {
+        return { id: params.id, title: params.title }
+    }
+  ```
+
+## 9. router-link的replace模式
+
++ 作用： 控制路由跳转时操作浏览器历史记录的模式
+
++ 浏览器记录的两种写入模式：push/replace，push时追加历史记录；replace时替换当前历史记录（默认为push）
+
++ 开启replace模式``<router-link :replace="true"></router-link>``,简写为``<router-link replace></router-link>``
+
+## 10. 编程式路由导航
+
++ 不借助``<router-link></router-link>``实现路由导航，更加灵活
+
++ 实现(push与replace)
+
+  ```vue
+    methods: {
+      pushWatching(message) {
+        this.$router.push({
+          name: "msgDetail",
+          params: {
+            id: message.id,
+            title: message.title,
+          },
+        });
+      },
+      replaceWatching(message) {
+        this.$router.replace({
+          name: "msgDetail",
+          params: {
+            id: message.id,
+            title: message.title,
+          },
+        });
+      },
+    },
+  ```
+
++ back与forward(与浏览器中前进后退功能一致)
+
++ go(前进或后退的步数，正数为前进，负数为后退)
+
+  ```vue
+    methods: {
+      goBack() {
+        this.$router.back();
+      },
+      goAhead() {
+        this.$router.forward();
+      },
+      testGo(){
+        this.$router.go(1);
+      }
+    },
+  ```
+
+## 11. 缓存路由组件
+
++ 让不展示的路由保持挂载，不被销毁
+
++ 使用
+
+  ```vue
+  // include中为组件名，标识需要不卸载的组件
+    <keep-alive include="HomeNews">
+      <router-view></router-view>
+    </keep-alive>
+  ```
+
