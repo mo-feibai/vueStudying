@@ -237,3 +237,81 @@
     </keep-alive>
   ```
 
+## 12. 两个新的生命周期钩子
+
++ 路由组件的两个独有的生命周期钩子，用于捕获路由组件的激活状态
+
++ 具体名字：
+  + activated -- 路由组件被激活时触发
+  + deactivated -- 路由组件失活时触发
+
+## 13. 路由守卫
+
++ 作用：对路由器进行权限控制
+
++ 分类：全局守卫，。独享守卫，组件内守卫
+
++ 全局守卫
+
+  ```vue
+  // 全局前置守卫：初始化时执行，每次路由切换前执行
+    router.beforeEach((to, from, next) => {
+        // 判断是否需要鉴权
+        if (to.meta.isAuthenticated) {
+            if (localStorage.getItem("name") === 'mofeibai') {
+                next();
+            } else {
+                alert("您没有权限");
+            }
+        } else {
+            next();
+        }
+    })
+
+    // 全局后置路由，初始时执行，每次路由切换后执行
+    router.afterEach((to) => {
+        let title = to.meta.title;
+            document.title = title;
+    })
+
+    // router中的配置（meta中可以存储自定义数据）
+        { name: "aboutThis", path: "/about", component: About, meta: { title: "关于" } },
+  ```
+
++ 独享守卫
+
+  ```vue
+  // 写法与全局前置守卫相同，旨在当前定义的路由中有效
+    {
+      name: "msgDetail", path: "messageDetail/:id/:title", component: MessageDetail, meta: { isAuthenticated: true, title: "消息详情" },
+      props({ params }) {
+          return { id: params.id, title: params.title }
+      },
+      beforeEnter: (to, from, next) => {
+          // 判断是否需要鉴权
+          if (to.meta.isAuthenticated) {
+              if (localStorage.getItem("name") === 'mofeibai') {
+                  next();
+              } else {
+                  alert("您没有权限");
+              }
+          } else {
+              next();
+          }
+      }
+  }
+  ```
+
++ 组件内路由守卫(组件内配置)
+
+  ```vue
+      // 通过路由规则，进入该组件时调用
+    beforeRouteEnter (to, from, next) {
+      // ...
+    },
+    
+    // 通过路由规则，离开该组件时调用
+    beforeRouteLeave (to, from, next) {
+      // ...
+    }
+  ```
