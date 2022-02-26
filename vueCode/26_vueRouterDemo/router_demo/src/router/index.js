@@ -9,6 +9,7 @@ import MessageDetail from '../pages/MessageDetail'
 
 // 创建并暴露一个路由器
 const router = new VueRouter({
+    mode:"history",
     routes: [
         { name: "aboutThis", path: "/about", component: About, meta: { title: "关于" } },
         {
