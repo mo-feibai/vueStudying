@@ -183,6 +183,9 @@
 
 + 实现(push与replace)
 
+> 传递params参数需要使用`:xxxx`在路径中对其占位，如果params可传可不传，使用`:xxxx?`占位 <br/>
+> 如果可能传递空串，则传递时`keyword:xxx||undefined` 防止出现跳转错误
+
   ```vue
     methods: {
       pushWatching(message) {
